@@ -2,7 +2,7 @@ const Course = require('../models/Course');
 const Section = require('../models/Section');
 const Unit = require('../models/Unit');
 const Chapter = require('../models/Chapter');
-
+const Question = require('../models/Question');
 
 exports.createCourse = async (req, res) => {
   const { title, description } = req.body;
@@ -42,6 +42,32 @@ exports.createChapter = async (req, res) => {
   try {
     const chapter = await Chapter.create({ unit: unitId, title, content });
     res.status(201).json(chapter);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.createQuestion = async (req, res) => {
+  const {
+    chapterId,
+    type,
+    questionText,
+    options,
+    correctAnswer,
+    media,
+  } = req.body;
+
+  try {
+    const question = await Question.create({
+      chapter: chapterId,
+      type,
+      questionText,
+      options,
+      correctAnswer,
+      media,
+    });
+
+    res.status(201).json(question);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
