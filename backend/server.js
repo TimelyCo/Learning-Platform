@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const learnerRoutes = require('./routes/learnerRoutes');
 
 dotenv.config();
 connectDB();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/auth',authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/learn', learnerRoutes);
 
 app.get('/', (req, res) => {
   res.send('API has started working');
