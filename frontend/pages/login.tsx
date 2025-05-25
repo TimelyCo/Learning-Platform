@@ -1,17 +1,22 @@
 import { useState } from 'react';
-import api from '../utils/api';
 import { useRouter } from 'next/router';
+import api from '../utils/api';
 import { setToken } from '../utils/auth';
+import Layout from '../components/Layout';
+import toast from 'react-hot-toast';
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const res = await api.post('/auth/login', { email, password });
       setToken(res.data.token);
+      toast.success('Login successful!');
 
       // Redirect based on role
       if (res.data.role === 'admin') {
@@ -20,16 +25,41 @@ export default function LoginPage() {
         router.push('/learner/dashboard');
       }
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Login failed');
+      toast.error(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      <input type="email" placeholder="Email" className="border p-2 mb-2 block" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" className="border p-2 mb-2 block" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin} className="bg-blue-600 text-white px-4 py-2 rounded">Login</button>
-    </div>
+    <Layout>
+      <div className="max-w-md mx-auto bg-white p-8 mt-16 rounded shadow">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Login</h1>
+
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full border border-gray-300 p-3 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full border border-gray-300 p-3 rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          onClick={handleLogin}
+          disabled={loading}
+          className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded transition ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </div>
+    </Layout>
   );
 }
