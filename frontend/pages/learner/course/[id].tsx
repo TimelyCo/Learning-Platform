@@ -47,7 +47,7 @@ export default function CoursePage() {
   const submitProgress = async (chapterId: string) => {
     try {
       const score = Object.entries(answers).filter(([questionId, userAnswer]) =>
-        course .sections.some(section =>
+        course.sections.some(section =>
           section.units.some(unit =>
             unit.chapters.some(chap =>
               chap._id === chapterId &&
@@ -108,10 +108,11 @@ export default function CoursePage() {
 
                       <button
                         onClick={() => submitProgress(chapter._id)}
-                        className="mb-6 px-4 py-2 bg-green-600 text-white rounded"
+                        className="mb-6 px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded shadow-sm transition duration-200"
                       >
-                        Submit Chapter
+                        ✅ Submit Chapter
                       </button>
+
                     </div>
                   );
                 })}

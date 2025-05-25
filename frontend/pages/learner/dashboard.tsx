@@ -26,20 +26,21 @@ function LearnerDashboard() {
     }, []);
 
     return (
-        <div className="p-8">
-            <h1 className="text-2xl font-bold mb-4">Your Courses</h1>
+        <div className="p-6 sm:p-8 max-w-7xl mx-auto">
+            <h1 className="text-3xl font-bold text-blue-700 mb-8">📚 Your Courses</h1>
+
             {courses.length === 0 ? (
-                <p>No courses found.</p>
+                <p className="text-gray-600">No courses found.</p>
             ) : (
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses.map((course: any) => (
                         <CourseCard key={course._id} course={course} />
                     ))}
-                </ul>
-
+                </div>
             )}
         </div>
     );
+
 
 }
 
