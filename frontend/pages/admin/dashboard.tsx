@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import api from '../../utils/api';
 import { getToken } from '../../utils/auth';
+import withAuth from '../../components/withAuth';
 
-export default function AdminDashboard() {
+function AdminDashboard() {
   const [courseTitle, setCourseTitle] = useState('');
   const [description, setDescription] = useState('');
   const [courseId, setCourseId] = useState('');
@@ -118,3 +119,6 @@ export default function AdminDashboard() {
     </div>
   );
 }
+
+
+export default withAuth(AdminDashboard, 'admin');

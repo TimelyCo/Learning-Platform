@@ -108,3 +108,11 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
+exports.getProgress = async (req, res) => {
+  const userId = req.user._id;
+  const courseId = req.params.courseId;
+
+  const progress = await UserProgress.findOne({ user: userId, course: courseId });
+  res.json(progress || {});
+};
+

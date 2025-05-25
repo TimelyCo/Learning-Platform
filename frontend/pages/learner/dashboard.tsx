@@ -3,7 +3,9 @@ import api from '../../utils/api';
 import { getToken } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import CourseCard from '../../components/CourseCard';
-export default function LearnerDashboard() {
+import withAuth from '../../components/withAuth';
+
+function LearnerDashboard() {
     const [courses, setCourses] = useState([]);
     const router = useRouter();
 
@@ -40,3 +42,5 @@ export default function LearnerDashboard() {
     );
 
 }
+
+export default withAuth(LearnerDashboard, 'learner');
