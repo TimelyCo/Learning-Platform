@@ -5,12 +5,12 @@ import { getToken } from '../../../utils/auth';
 import ChapterViewer from '../../../components/ChapterViewer';
 import toast from 'react-hot-toast';
 import Layout from '../../../components/Layout';
-
+import type { Course } from '../../../utils/types';
 export default function CoursePage() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [course, setCourse] = useState<any>(null);
+  const [course, setCourse] = useState<Course | null>(null);
   const [userProgress, setUserProgress] = useState<any>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
@@ -46,30 +46,52 @@ export default function CoursePage() {
 
   const submitProgress = async (chapterId: string) => {
     try {
-      const score = Object.entries(answers).filter(([questionId, userAnswer]) =>
-        course.sections.some(section =>
-          section.units.some(unit =>
-            unit.chapters.some(chap =>
-              chap._id === chapterId &&
-              chap.questions.some(q => q._id === questionId && q.correctAnswer === userAnswer)
+      if (!course) {
+        toast.error('Course not loaded.');
+        return;
+      }
+
+      const isCorrectAnswer = (
+        questionId: string,
+        userAnswer: string
+      ): boolean => {
+        return course.sections.some((section) =>
+          section.units.some((unit) =>
+            unit.chapters.some(
+              (chap) =>
+                chap._id === chapterId &&
+                chap.questions.some(
+                  (q) =>
+                    q._id === questionId && q.correctAnswer === userAnswer
+                )
             )
           )
-        )
+        );
+      };
+
+      const score = Object.entries(answers).filter(([questionId, userAnswer]) =>
+        isCorrectAnswer(questionId, userAnswer)
       ).length;
 
-      await api.post('/learn/progress', {
-        courseId: id,
-        chapterId,
-        score,
-      }, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      await api.post(
+        '/learn/progress',
+        {
+          courseId: id,
+          chapterId,
+          score,
+        },
+        {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        }
+      );
 
       toast.success(`Progress saved! Score: ${score}`);
-    } catch {
+    } catch (err) {
+      console.error(err);
       toast.error('Failed to save progress');
     }
   };
+
 
   if (loading) return <Layout><div className="p-8">Loading course...</div></Layout>;
 
