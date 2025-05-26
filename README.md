@@ -101,12 +101,12 @@ Access: http://localhost:3000
 Test Credentials:
 ```txt
 # Admin
-email: admin@example.com
+email: anmol@example.com
 password: 123456
 
 # Learner
-email: learner@example.com
-password: 123456
+email: shagun@gmail.com
+password: 987456321
 ```
 
 📁 Folder Structure
