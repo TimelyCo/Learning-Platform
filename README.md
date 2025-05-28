@@ -7,10 +7,10 @@ It supports **Admin** to create structured courses and **Learners** to study, an
 
 ## 🚀 Live Demo
 
-🌐 Frontend: [https://your-vercel-link.vercel.app](https://your-vercel-link.vercel.app)  
-🔗 Backend API: [https://your-render-backend.onrender.com](https://your-render-backend.onrender.com)
+🌐 Frontend: https://learning-platform-mocha.vercel.app/  
+🔗 Backend API: https://learning-platform-tc6p.onrender.com
 
-> _(Replace with real links after deployment)_
+
 
 ---
 
