@@ -134,5 +134,5 @@ This project is submitted as part of the MERN Stack Assignment by EnglishBhashi.
 Anmol Raturi
 B.Tech CSE, Graphic Era Hill University
 📍 Dehradun | 🛰️ MERN | ⚙️ DSA | 🎓 NSS & Debating Society
-🔗 GitHub: github.com/anmolraturi
-📧 Email: anmolraturi2003@gmail.com
+🔗 GitHub: [github.com/anmolraturi](https://github.com/TimelyCo)
+📧 Email: anmolraturi246@gmail.com
